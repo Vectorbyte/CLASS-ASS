@@ -4,29 +4,29 @@
 ----------------------------
 class "Animation"
 {
-	-- animation sheet quads are stored here
+	-- Animation sheet quads are stored here
 	image;
 	
-	-- current frame number, useful for animation events
+	-- Current frame number, useful for animation events
 	currentFrame = 1;
 
-	-- animation info
-	frameNumber; -- gets number of frames in the current animation
-	totalFrames; -- total frame count in the imported animation sheet
-	frameSpeed;  -- animation speed
+	-- Animation info
+	frameNumber; -- Gets number of frames in the current animation
+	totalFrames; -- Total frame count in the imported animation sheet
+	frameSpeed;  -- Animation speed
 	
-	-- animation parameters
-	frameMin; -- goto frame for every loop
-	frameMax; -- maximum frame before loop
-	state;	  -- playing, paused, stopped.
+	-- Animation parameters
+	frameMin; -- Goto frame for every loop
+	frameMax; -- Maximum frame before loop
+	state;	  -- Playing, paused, stopped.
 	
-	-- booleans
+	-- Booleans
 	invertX = false;
 	invertY = false;
 	isLooping = true;
 	
 	Animation = function(self, image, speed, loop, ix, iy, fx, fy, w, h, ox, oy, sx, sy)
-		-- dumping the image into the object because fuck it
+		-- Dumping the image into the object because fuck it
 		self.animation = {}
 		self.image	= image
 		
@@ -46,7 +46,7 @@ class "Animation"
 			for x = ix, fx do
 				local frame = love.graphics.newQuad(
 					x*w-w, y*h-h,	-- i and j are our temporary x and y here
-					w, h,		-- and here's our width and height. marvelous
+					w, h,		-- And here's our width and height. marvelous
 					image:getWidth(), image:getHeight()
 				)
 				table.insert(self.animation, frame)
@@ -57,20 +57,20 @@ class "Animation"
 		self.frameMin	 = 1
 	end;
 	
-	-- assignment
+	-- Assignment
 	setLoopBounds	= function(self, min, max) self.frameMin = min or 1 self.frameMax = max or #self.animation end;
-	setLooping		= function(self, loop) self.isLooping = loop end;
-	setInvert		= function(self, x, y) self.invertX = x; self.invertY = y or false end;
-	setSpeed		= function(self, speed) self.frameSpeed = speed*60 end;
-	setState		= function(self, state) self.state = state end;
-	setFrame		= function(self, frame) self.currentFrame = frame end;
+	setLooping	= function(self, loop) self.isLooping = loop end;
+	setInvert	= function(self, x, y) self.invertX = x; self.invertY = y or false end;
+	setSpeed	= function(self, speed) self.frameSpeed = speed*60 end;
+	setState	= function(self, state) self.state = state end;
+	setFrame	= function(self, frame) self.currentFrame = frame end;
 	
-	-- retrieval
-	getFrames		= function(self) return self.frameNumber end;
+	-- Retrieval
+	getFrames	= function(self) return self.frameNumber end;
 	getTotalFrames	= function(self) return self.totalFrames end;
-	getFrame		= function(self) return math.floor(self.currentFrame) end;
+	getFrame	= function(self) return math.floor(self.currentFrame) end;
 	
-    -- I honestly don't know where this'll be useful but anyway, here it is
+	-- I honestly don't know where this'll be useful but anyway, here it is
 	getFrameTable	= function(self)
 		local min = math.floor(self.currentFrame - self.frameSpeed) 
 		local max = self.currentFrame
@@ -80,7 +80,7 @@ class "Animation"
 		return ret
 	end;
 	
-    -- Much better than the previous function
+    	-- Much better than the previous function
 	getFrameDelta	= function(self, frame)
 		local min = math.floor(self.currentFrame - self.frameSpeed) 
 		local max = self.currentFrame
@@ -98,7 +98,7 @@ class "Animation"
 			
 		elseif self.state == "stop" then
 			self.currentFrame = self.frameMin
-		end -- we discard the conditional here, since pause simply freezes self.currentFrame
+		end -- We discard the conditional here, since pause simply freezes self.currentFrame
 	end;
 	
 	Draw = function(self, x, y, r)
@@ -110,17 +110,19 @@ class "Animation"
 		self.y = y or self.y or 0
 		self.r = r or self.r or 0
 		
-		love.graphics.draw(self.image,
-						   self.animation[round(self.currentFrame)],
-						   self.x,
-						   self.y,
+		love.graphics.draw(
+			self.image,
+			self.animation[round(self.currentFrame)],
+			self.x,
+			self.y,
+	
+			self.r, 
 						   
-						   self.r, 
+			self.sx * scalex,
+			self.sy * scaley, 
 						   
-						   self.sx * scalex,
-						   self.sy * scaley, 
-						   
-						   self.ox, 
-						   self.oy)
+			self.ox, 
+			self.oy
+		)
 	end;
 }
