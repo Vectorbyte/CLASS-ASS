@@ -80,7 +80,7 @@ class "Animation"
 		return ret
 	end;
 	
-    	-- Much better than the previous function
+    	-- Much better than the previous function, but restricted in usage
 	getFrameDelta	= function(self, frame)
 		local min = math.floor(self.currentFrame - self.frameSpeed) 
 		local max = self.currentFrame
@@ -90,12 +90,10 @@ class "Animation"
 
 	Update = function(self, dt)
 		if self.state == "play" then
-			self.currentFrame = math.min(self.currentFrame + self.frameSpeed*dt,
-										 self.frameMax)
+			self.currentFrame = math.min(self.currentFrame + self.frameSpeed*dt, self.frameMax)
 			if self.currentFrame == self.frameMax and self.isLooping then
 				self.currentFrame = self.frameMin
 			end
-			
 		elseif self.state == "stop" then
 			self.currentFrame = self.frameMin
 		end -- We discard the conditional here, since pause simply freezes self.currentFrame
