@@ -105,7 +105,7 @@ class "Animation"
 		local scalex = self.invertX and -1 or 1
 		local scaley = self.invertY and -1 or 1
 		
-        -- in case someone doesn't pass all the arguments
+        	-- In case someone doesn't pass all the arguments
 		self.x = x or self.x or 0
 		self.y = y or self.y or 0
 		self.r = r or self.r or 0
