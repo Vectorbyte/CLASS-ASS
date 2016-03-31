@@ -7,7 +7,7 @@
 --------------------------| ) )--------------------------
 
 A small Love2D animation library for use with Classy
-https://github.com/DaZombieKiller/lualibs
+https://github.com/DaZombieKiller/classy
 
 --------------------------| ) )--------------------------
 ```
